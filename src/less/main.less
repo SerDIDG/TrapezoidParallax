@@ -1,0 +1,117 @@
+
+/* ************************************************ */
+/* ******* TEMPLATE ******* */
+/* ************************************************ */
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    min-width: 320px;
+    position: relative;
+    background: #000000 url('@{TplPath-Images}/bg.jpg') center top no-repeat fixed;
+    background-size: cover;
+    .mx__user-select(none);
+}
+
+.wrapper {
+    .display-flex;
+    min-height: 100%;
+    .mx__flex-flow(column nowrap);
+    .mx__justify-content(space-around);
+}
+
+/* ******* HEADER ******* */
+
+.header {
+    .mx__flex(1 1 auto);
+    min-height: 172px;
+    position: relative;
+}
+
+.header_logo {
+    max-width: 1060px;
+    position: absolute;
+    margin: auto;
+    .mx__position(@CmIndent-XLarge, @CmIndent-Medium, @CmIndent-XLarge, @CmIndent-Medium);
+
+    img {
+        display: block;
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+        margin: auto;
+    }
+}
+
+/* ******* CONTENT ******* */
+
+.content {
+    .mx__flex(0 1 auto);
+}
+
+/* ******* FOOTER ******* */
+
+.footer {
+    min-height: 144px;
+    position: relative;
+    .mx__flex(1 1 auto);
+}
+
+
+.footer_social {
+    position: absolute;
+    .mx__position(auto, @CmIndent-Medium, @CmIndent-XLarge, @CmIndent-Medium);
+
+    .pt__line-share {
+        overflow: visible;
+
+        > ul {
+            > li {
+                margin-right: @CmSize-Small;
+            }
+        }
+
+        .icon {
+            color: @CmColor-Font-Opposite;
+            text-shadow: 0 0 32px rgba(0, 0, 0, 1);
+        }
+    }
+}
+
+/* ******* ADAPTIVE ******* */
+
+@media only screen and (max-width : @CmScreen-Tablet) {
+
+    html.is-adaptive {
+
+    }
+
+}
+
+@media only screen and (max-width : @CmScreen-TabletPortrait) {
+
+    html.is-adaptive {
+
+    }
+
+}
+
+@media only screen and (max-width : @CmScreen-Mobile) {
+
+    html.is-adaptive {
+
+    }
+
+}
+
+@media only screen and (max-width : @CmScreen-MobilePortrait) {
+
+    html.is-adaptive {
+
+    }
+
+}

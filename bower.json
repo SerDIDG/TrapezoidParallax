@@ -1,0 +1,35 @@
+{
+  "name": "NPC",
+  "repository": "SerDIDG/NPC",
+  "description": "NPC Website - http://noplaceclub.com",
+  "main": [
+    "build/js/NPC.js",
+    "build/css/NPC.css"
+  ],
+  "authors": [
+    {
+      "name": "Serhio Magpie",
+      "email": "serdidg@gmail.com",
+      "homepage": "https://github.com/SerDIDG"
+    }
+  ],
+  "license": "EULA",
+  "keywords": [
+    "ui", "javascript", "js", "css", "less", "website"
+  ],
+  "homepage": "http://noplaceclub.com",
+  "moduleType": [
+    "globals"
+  ],
+  "ignore": [
+    "**/.*",
+    "lib",
+    "temp",
+    "node_modules",
+    "bower_components"
+  ],
+  "private": true,
+  "dependencies": {
+    "magpieui": "https://github.com/SerDIDG/MagpieUI.git"
+  }
+}
