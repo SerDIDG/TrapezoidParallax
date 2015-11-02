@@ -21,7 +21,7 @@
                         </a>
                     </li>
                     <li>
-                        <a target="_blank" title="Instagram">
+                        <a href="https://instagram.com/no.place.club/" target="_blank" title="Instagram">
                             <div class="icon x-large cm-i__circle-instagram linked"></div>
                         </a>
                     </li>
