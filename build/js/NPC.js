@@ -251,7 +251,7 @@ if(!Date.now){
  ******* */
 
 var cm = {
-        '_version' : '3.8.4',
+        '_version' : '3.8.5',
         '_loadTime' : Date.now(),
         '_debug' : true,
         '_debugAlert' : false,
@@ -6529,7 +6529,7 @@ function(params){
             }, params),
             childNodes;
         // Add mark classes
-        cm.addClass(area['node'], 'com__dashboard__area');
+        cm.addClass(area['node'], 'pt__dnd-area');
         cm.addClass(area['node'], that.params['classes']['area']);
         if(area['isLocked']){
             cm.addClass(area['node'], 'is-locked');
@@ -7187,13 +7187,13 @@ function(params){
             left += widget['dimensions']['offsetX'];
             top += widget['dimensions']['offsetY'];
         }
-        if(params['width']){
+        if(typeof params['width'] != 'undefined'){
             node.style.width = [params['width'], 'px'].join('');
         }
-        if(params['height']){
+        if(typeof params['height'] != 'undefined'){
             node.style.height = [params['height'], 'px'].join('');
         }
-        if(params['opacity']){
+        if(typeof params['opacity'] != 'undefined'){
             node.style.opacity = params['opacity'];
         }
         cm.setCSSTranslate(node, [left, 'px'].join(''), [top, 'px'].join(''));
@@ -12512,6 +12512,8 @@ function(params){
                 that.params['container'].appendChild(that.nodes['container']);
             }
         }
+        // Reset styles and variables
+        reset();
         // Overlay
         cm.getConstructor('Com.Overlay', function(classConstructor){
             that.components['loader'] = new classConstructor(that.params['Com.Overlay']);
@@ -12521,6 +12523,11 @@ function(params){
             cm.addClass(that.nodes['container'], 'is-animated');
         }
         that.animations['content'] = new cm.Animation(that.nodes['content']);
+    };
+
+    var reset = function(){
+        // Clear render pages
+        cm.clearNode(that.nodes['pages']);
     };
 
     var set = function(page){
@@ -12943,13 +12950,11 @@ function(params){
         if(that.isProcess){
             that.abort();
         }
-        if(that.currentPage){
-            cm.remove(that.pages[that.currentPage]['container']);
-        }
         that.pages = {};
-        that.isAjax = false;
         that.currentPage = null;
         that.previousPage = null;
+        // Reset styles and variables
+        reset();
         // Set new parameters
         that.setParams(params);
         validateParams();
@@ -13591,6 +13596,7 @@ cm.define('Com.ScrollPagination', {
     ],
     'events' : [
         'onRender',
+        'onRebuild',
         'onStart',
         'onAbort',
         'onError',
@@ -13711,25 +13717,32 @@ function(params){
                 that.params['container'].appendChild(that.nodes['container']);
             }
         }
+        // Reset styles and variables
+        reset();
+        // Events
+        cm.addEvent(that.nodes['button'], 'click', function(e){
+            e = cm.getEvent(e);
+            cm.preventDefault(e);
+            set();
+        });
+        if(that.params['stopOnESC']){
+            cm.addEvent(window, 'keydown', ESCHandler);
+        }
+        cm.addScrollEvent(that.params['scrollNode'], scrollHandler);
+        cm.addEvent(window, 'resize', resizeHandler);
+    };
+
+    var reset = function(){
+        // Clear render pages
+        cm.clearNode(that.nodes['pages']);
         // Load More Button
         if(!that.params['showButton']){
             that.callbacks.hideButton(that);
         }else{
             that.callbacks.showButton(that);
         }
-        cm.addEvent(that.nodes['button'], 'click', function(e){
-            e = cm.getEvent(e);
-            cm.preventDefault(e);
-            set();
-        });
         // Hide Loader
         cm.addClass(that.nodes['loader'], 'is-hidden');
-        // Events
-        if(that.params['stopOnESC']){
-            cm.addEvent(window, 'keydown', ESCHandler);
-        }
-        cm.addScrollEvent(that.params['scrollNode'], scrollHandler);
-        cm.addEvent(window, 'resize', resizeHandler);
     };
 
     var set = function(){
@@ -13965,11 +13978,7 @@ function(params){
             that.callbacks.finalize(that);
         }
         // Show / Hide Load More Button
-        if(!that.isFinalize && (that.params['showButton'] === true || (that.params['showButton'] == 'once' && that.params['startPage'] == that.page))){
-            that.callbacks.showButton(that);
-        }else{
-            that.callbacks.hideButton(that);
-        }
+        that.callbacks.toggleButton(that);
         that.triggerEvent('onEnd');
     };
 
@@ -13978,6 +13987,14 @@ function(params){
             that.isFinalize = true;
             that.callbacks.hideButton(that);
             that.triggerEvent('onFinalize');
+        }
+    };
+
+    that.callbacks.toggleButton = function(that){
+        if(!that.isFinalize && (that.params['showButton'] === true || (that.params['showButton'] == 'once' && that.params['startPage'] == that.page))){
+            that.callbacks.showButton(that);
+        }else{
+            that.callbacks.hideButton(that);
         }
     };
 
@@ -14013,6 +14030,24 @@ function(params){
         that.currentPage = that.nextPage;
         that.nextPage++;
         return that;
+    };
+
+    that.rebuild = function(params){
+        // Cleanup
+        if(that.isProcess){
+            that.abort();
+        }
+        that.pages = {};
+        that.currentPage = null;
+        that.previousPage = null;
+        // Set new parameters
+        that.setParams(params);
+        validateParams();
+        // Reset styles and variables
+        reset();
+        that.triggerEvent('onRebuild');
+        // Render new pge
+        set();
     };
 
     that.isPageVisible = function(page, scrollRect){
@@ -16855,10 +16890,14 @@ function(params){
 
     var getLeftTime = function(){
         var o = {};
-        o['d'] = Math.floor(that.left / 1000 / 60 / 60 / 24);
-        o['h'] = Math.floor((that.left / 1000 / 60 / 60) - (o['d'] * 24));
-        o['m'] = Math.floor((that.left / 1000 / 60) - (o['d'] * 24 * 60) - (o['h'] * 60));
-        o['s'] = Math.floor((that.left / 1000) - (o['d'] * 24 * 60 * 60) - (o['h'] * 60 * 60) - (o['m'] * 60));
+        o['d_total'] = Math.floor(that.left / 1000 / 60 / 60 / 24);
+        o['h_total'] = Math.floor(that.left / 1000 / 60 / 60);
+        o['m_total'] = Math.floor(that.left / 1000 / 60);
+        o['s_total'] = Math.floor(that.left / 1000);
+        o['d'] = Math.floor(o['d_total']);
+        o['h'] = Math.floor(o['h_total'] - (o['d'] * 24));
+        o['m'] = Math.floor(o['m_total'] - (o['d'] * 24 * 60) - (o['h'] * 60));
+        o['s'] = Math.floor(o['s_total'] - (o['d'] * 24 * 60 * 60) - (o['h'] * 60 * 60) - (o['m'] * 60));
         return o;
     };
 
@@ -16866,16 +16905,16 @@ function(params){
 
     that.start = function(){
         var o = getLeftTime(),
-            tick = Date.now(),
-            tack;
+            left = that.left,
+            startTime = Date.now(),
+            currentTime;
         that.isProcess = true;
         that.triggerEvent('onStart', o);
         // Process
         (function process(){
             if(that.isProcess){
-                tack = tick;
-                tick = Date.now();
-                that.left = Math.max(that.left - (tick - tack), 0);
+                currentTime = Date.now();
+                that.left = Math.max(left - (currentTime - startTime), 0);
                 that.pass = that.params['count'] - that.left;
                 o = getLeftTime();
                 that.triggerEvent('onTick', o);

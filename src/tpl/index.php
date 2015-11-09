@@ -25,11 +25,6 @@
                             <div class="icon x-large cm-i__circle-instagram linked"></div>
                         </a>
                     </li>
-                    <li>
-                        <a target="_blank" title="Twitter">
-                            <div class="icon x-large cm-i__circle-twitter linked"></div>
-                        </a>
-                    </li>
                 </ul>
             </div>
         </div>

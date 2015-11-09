@@ -8,4 +8,4 @@ $date = new DateTime('2015-11-17 22:00:00');
 $config['endTime'] = $date->getTimestamp();
 $config['leftTime'] = $config['endTime'] - $config['currentTime'];
 
-include_once 'tpl/timer.php';
+include_once 'tpl/index.php';
