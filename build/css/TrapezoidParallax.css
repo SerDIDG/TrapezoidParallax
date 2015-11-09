@@ -7961,23 +7961,23 @@ button::-moz-focus-inner {
   border-radius: 0 3px 3px 0;
 }
 .pt__line-share .icon.default {
-  width: 48px;
-  height: 48px;
+  width: 32px;
+  height: 32px;
 }
 .pt__line-share .label,
 .pt__line-share .count {
-  line-height: 48px;
+  line-height: 32px;
 }
 .pt__line-share > ul {
-  margin: 0 0 0 0;
+  margin: 0 0 -8px 0;
 }
 .pt__line-share > ul > li {
-  margin: 0 0 0 0;
+  margin: 0 0 8px 0;
 }
 .pt__line-share.pull-left > ul > li,
 .pt__line-share.pull-center > ul > li,
 .pt__line-share.pull-justify > ul > li {
-  margin-right: 0;
+  margin-right: 8px;
   margin-left: 0;
 }
 .pt__line-share.pull-left > ul > li:last-child,
@@ -7988,7 +7988,7 @@ button::-moz-focus-inner {
 }
 .pt__line-share.pull-right > ul > li {
   margin-right: 0;
-  margin-left: 0;
+  margin-left: 8px;
 }
 .pt__line-share.pull-right > ul > li:first-child {
   margin-right: 0;
@@ -13525,92 +13525,112 @@ html.ie9 .com__timeselect > .inner > .sep {
   display: block;
   padding: 24px;
 }
-/* ************************************************ */
-/* ******* TEMPLATE ******* */
-/* ************************************************ */
-html,
-body {
+/* ******* COMPONENTS: SECTIONS ******* */
+.app__section {
   width: 100%;
   height: 100%;
-}
-body {
-  min-width: 320px;
-  position: relative;
-  background: #000000 url('../img/bg.jpg') center top no-repeat fixed;
-  background-size: cover;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
-}
-.wrapper {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: center;
-  min-height: 100%;
-  -webkit-flex-flow: column nowrap;
-  -ms-flex-flow: column nowrap;
-  flex-flow: column nowrap;
-  -webkit-justify-content: space-around;
-  justify-content: space-around;
-}
-/* ******* HEADER ******* */
-.header {
-  -webkit-flex: 1 1 auto;
-  -ms-flex: 1 1 auto;
-  flex: 1 1 auto;
-  min-height: 172px;
+  min-height: 900px;
   position: relative;
 }
-.header_logo {
-  max-width: 900px;
+.app__section > .b-top,
+.app__section > .b-bottom {
+  width: 100%;
+  height: 50%;
   position: absolute;
-  margin: auto;
-  top: 48px;
-  right: 24px;
-  bottom: 48px;
-  left: 24px;
-}
-.header_logo img {
-  display: block;
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: 100%;
-  margin: auto;
-}
-/* ******* CONTENT ******* */
-.content {
-  -webkit-flex: 0 1 auto;
-  -ms-flex: 0 1 auto;
-  flex: 0 1 auto;
-}
-/* ******* FOOTER ******* */
-.footer {
-  min-height: 144px;
-  position: relative;
-  -webkit-flex: 1 1 auto;
-  -ms-flex: 1 1 auto;
-  flex: 1 1 auto;
-}
-.footer_social {
-  position: absolute;
+  overflow: hidden;
   top: auto;
-  right: 24px;
-  bottom: 48px;
-  left: 24px;
+  right: 0;
+  bottom: auto;
+  left: 0;
+  -webkit-transform-origin: 50% 50% 0;
+  -moz-transform-origin: 50% 50% 0;
+  transform-origin: 50% 50% 0;
 }
-.footer_social .pt__line-share {
-  overflow: visible;
+.app__section > .b-top > .inner,
+.app__section > .b-bottom > .inner {
+  position: absolute;
+  background: #ffffff no-repeat fixed center center;
+  background-size: cover;
+  top: -50%;
+  right: 0;
+  bottom: -50%;
+  left: 0;
+  -webkit-transform-origin: 50% 50% 0;
+  -moz-transform-origin: 50% 50% 0;
+  transform-origin: 50% 50% 0;
 }
-.footer_social .pt__line-share > ul > li {
-  margin-right: 16px;
+.app__section > .b-top {
+  top: 0;
+  z-index: 2;
+  border-top: 3px solid #ffffff;
 }
-.footer_social .pt__line-share .icon {
-  color: #ffffff;
-  text-shadow: 0 0 32px #000000;
+.app__section > .b-bottom {
+  bottom: 0;
+  z-index: 1;
 }
-/* ******* ADAPTIVE ******* */
+.app__section.is-right > .b-top {
+  -webkit-transform: skewY(7deg);
+  -ms-transform: skewY(7deg);
+  transform: skewY(7deg);
+}
+.app__section.is-right > .b-top > .inner {
+  -webkit-transform: skewY(-7deg);
+  -ms-transform: skewY(-7deg);
+  transform: skewY(-7deg);
+}
+.app__section.is-right > .b-bottom {
+  -webkit-transform: skewY(-7deg);
+  -ms-transform: skewY(-7deg);
+  transform: skewY(-7deg);
+}
+.app__section.is-right > .b-bottom > .inner {
+  -webkit-transform: skewY(7deg);
+  -ms-transform: skewY(7deg);
+  transform: skewY(7deg);
+}
+.app__section.is-left > .b-top {
+  -webkit-transform: skewY(-7deg);
+  -ms-transform: skewY(-7deg);
+  transform: skewY(-7deg);
+}
+.app__section.is-left > .b-top > .inner {
+  -webkit-transform: skewY(7deg);
+  -ms-transform: skewY(7deg);
+  transform: skewY(7deg);
+}
+.app__section.is-left > .b-bottom {
+  -webkit-transform: skewY(7deg);
+  -ms-transform: skewY(7deg);
+  transform: skewY(7deg);
+}
+.app__section.is-left > .b-bottom > .inner {
+  -webkit-transform: skewY(-7deg);
+  -ms-transform: skewY(-7deg);
+  transform: skewY(-7deg);
+}
+.app__section.is-top > .b-top {
+  -webkit-transform: skewY(0deg);
+  -ms-transform: skewY(0deg);
+  transform: skewY(0deg);
+}
+.app__section.is-top > .b-top > .inner {
+  -webkit-transform: skewY(0deg);
+  -ms-transform: skewY(0deg);
+  transform: skewY(0deg);
+}
+.app__section.is-bottom > .b-bottom {
+  -webkit-transform: skewY(0deg);
+  -ms-transform: skewY(0deg);
+  transform: skewY(0deg);
+}
+.app__section.is-bottom > .b-bottom > .inner {
+  -webkit-transform: skewY(0deg);
+  -ms-transform: skewY(0deg);
+  transform: skewY(0deg);
+}
+.app__section:first-child > .b-top {
+  border-top: none;
+}
 /* ******* COMPONENTS: TIMER ******* */
 .app__timer {
   opacity: 0;
@@ -13707,3 +13727,39 @@ body {
     padding: 0 12px;
   }
 }
+/* ************************************************ */
+/* ******* TEMPLATE ******* */
+/* ************************************************ */
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+body {
+  min-width: 320px;
+  position: relative;
+  background: #ffffff;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+/* ******* HEADER ******* */
+/* ******* CONTENT ******* */
+.s__splash > .b-top > .inner,
+.s__splash > .b-bottom > .inner {
+  background-image: url('../img/bg/splash.jpg');
+}
+.s__about > .b-top > .inner,
+.s__about > .b-bottom > .inner {
+  background-image: url('../img/bg/about.jpg');
+}
+.s__events > .b-top > .inner,
+.s__events > .b-bottom > .inner {
+  background-image: url('../img/bg/events.jpg');
+}
+.s__contacts > .b-top > .inner,
+.s__contacts > .b-bottom > .inner {
+  background-image: url('../img/bg/contacts.jpg');
+}
+/* ******* FOOTER ******* */
+/* ******* ADAPTIVE ******* */

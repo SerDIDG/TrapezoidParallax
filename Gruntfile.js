@@ -3,11 +3,13 @@ module.exports = function(grunt) {
     var config = {
         'less' : {
             'files' : [
-                'src/less/main.less',
+                'src/less/common.less',
                 'src/less/variables.less',
+                'src/less/common/**/*.less',
                 'src/less/parts/**/*.less',
                 'src/less/layouts/**/*.less',
                 'src/less/components/**/*.less',
+                'src/less/template.less',
                 '!src/less/index.less'
             ]
         },
@@ -30,6 +32,9 @@ module.exports = function(grunt) {
             },
             build : [
                 'build'
+            ],
+            'images' : [
+                'build/img'
             ],
             post : [
                 'temp'
@@ -131,11 +136,6 @@ module.exports = function(grunt) {
                     dest: 'build/'
                 },{
                     expand: true,
-                    cwd: 'src/tpl/',
-                    src: ['**/*.*'],
-                    dest: 'build/tpl/'
-                },{
-                    expand: true,
                     cwd: 'src/fonts/',
                     src: [
                         '**/*.*',
@@ -159,10 +159,18 @@ module.exports = function(grunt) {
                 options: {
                     spawn: false
                 }
+            },
+            images: {
+                files: ['src/img/**/*.*'],
+                tasks: ['images'],
+                options: {
+                    spawn: false
+                }
             }
         }
     });
     // Default task(s).
     grunt.registerTask('default', ['clean', 'bower', 'less_imports', 'less', 'concat', 'cssmin', 'uglify', 'imagemin', 'copy', 'clean:post']);
     grunt.registerTask('dev', ['less_imports', 'less', 'concat', 'copy', 'clean:post']);
+    grunt.registerTask('images', ['clean:images', 'imagemin']);
 };

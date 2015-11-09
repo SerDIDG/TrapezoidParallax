@@ -19088,12 +19088,12 @@ var App = {};
 cm.onReady(function(){
     window.Collector.construct();
 });
-cm.define('App.Timer', {
+cm.define('App.Sections', {
     'modules' : [
         'Params',
         'Events',
-        'Langs',
         'DataConfig',
+        'DataNodes',
         'Stack'
     ],
     'events' : [
@@ -19101,79 +19101,49 @@ cm.define('App.Timer', {
     ],
     'params' : {
         'node' : cm.Node('div'),
-        'name' : '',
-        'count' : 0,
-        'counters' : ['d', 'h', 'm', 's'],
-        'langs' : {
-            'd' : ['день', 'дня', 'дней'],
-            'h' : ['час', 'часа', 'часов'],
-            'm' : ['минута', 'минуты', 'минут'],
-            's' : ['секунда', 'секунды', 'секунд']
-        }
+        'name' : ''
     }
 },
 function(params){
     var that = this;
 
-    that.nodes = {};
-    that.components = {};
-
-    that.current = {};
-    that.previous = {};
+    that.nodes = {
+        'sections' : []
+    };
 
     var init = function(){
         that.setParams(params);
         that.convertEvents(that.params['events']);
+        that.getDataNodes(that.params['node']);
         that.getDataConfig(that.params['node']);
         render();
-        that.addToStack(that.nodes['container']);
+        that.addToStack(that.params['node']);
         that.triggerEvent('onRender');
     };
 
     var render = function(){
-        // Structure
-        that.nodes['container'] = cm.node('div', {'class' : 'app__timer'},
-            that.nodes['inner'] = cm.node('div', {'class' : 'inner'})
-        );
-        // Render Blocks
-        cm.forEach(that.params['counters'], function(counter, i){
-            // Render Separator
-            if(i != 0){
-                that.nodes['inner'].appendChild(
-                    cm.node('div', {'class' : 'b-separator'}, ':')
-                );
-            }
-            // Render Block
-            that.nodes[counter] = cm.node('div', {'class' : 'b-counter'},
-                that.nodes[counter + 'Value'] = cm.node('div', {'class' : 'b-value'}),
-                that.nodes[counter + 'Label'] = cm.node('div', {'class' : 'b-label'})
-            );
-            that.nodes['inner'].appendChild(that.nodes[counter]);
-        });
-        // Append
-        that.params['node'].appendChild(that.nodes['container']);
-        // Init Timer
-        cm.getConstructor('Com.Timer', function(classConstructor){
-            that.components['timer'] = new classConstructor({
-                'count' : that.params['count'],
-                'events' : {
-                    'onTick' : renderTime
-                }
-            });
-        });
-        // Show
-        cm.addClass(that.nodes['container'], 'is-show', true);
+        cm.addEvent(window, 'resize', resizeAction);
+        resizeAction();
     };
 
-    var renderTime = function(timer, counters){
-        that.previous = cm.clone(that.current);
-        cm.forEach(that.params['counters'], function(counter){
-            if(that.previous[counter] != counters[counter]){
-                that.nodes[counter + 'Value'].innerHTML = cm.addLeadZero(counters[counter]);
-                that.nodes[counter + 'Label'].innerHTML = cm.getNumberDeclension(counters[counter], that.lang(counter));
-            }
-        });
-        that.current = counters;
+    var resizeAction = function(){
+        var pageSize = cm.getPageSize(),
+            size = 'calc(50% + ' + ((pageSize['width'] * Math.tan(radians(7))) / 2) + 'px)',
+            rule;
+        if(rule = cm.getCSSRule('.app__section > .b-top')[0]){
+            rule.style.height = size;
+        }
+        if(rule = cm.getCSSRule('.app__section > .b-bottom')[0]){
+            rule.style.height = size;
+        }
+    };
+
+    var radians = function(degrees) {
+        return degrees * Math.PI / 180;
+    };
+
+    var degrees = function(radians) {
+        return radians * 180 / Math.PI;
     };
 
     /* ******* PUBLIC ******* */
@@ -19182,9 +19152,8 @@ function(params){
 });
 window.Collector = new Com.Collector();
 
-window.Collector.add('timer', function(node){
-    new App.Timer({
-        'node' : node,
-        'count' : config['leftTime'] * 1000
+window.Collector.add('sections', function(node){
+    new App.Sections({
+        'node' : node
     });
 });

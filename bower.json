@@ -1,10 +1,10 @@
 {
-  "name": "NPC",
-  "repository": "SerDIDG/NPC",
-  "description": "NPC Website - http://noplaceclub.com",
+  "name": "TrapezoidParallax",
+  "repository": "SerDIDG/TrapezoidParallax",
+  "description": "Proof of concept",
   "main": [
-    "build/js/NPC.js",
-    "build/css/NPC.css"
+    "build/js/TrapezoidParallax.js",
+    "build/css/TrapezoidParallax.css"
   ],
   "authors": [
     {
@@ -15,9 +15,9 @@
   ],
   "license": "EULA",
   "keywords": [
-    "ui", "javascript", "js", "css", "less", "website"
+    "ui", "javascript", "js", "css", "less"
   ],
-  "homepage": "http://noplaceclub.com",
+  "homepage": "https://github.com/SerDIDG",
   "moduleType": [
     "globals"
   ],
@@ -28,7 +28,6 @@
     "node_modules",
     "bower_components"
   ],
-  "private": true,
   "dependencies": {
     "magpieui": "https://github.com/SerDIDG/MagpieUI.git"
   }

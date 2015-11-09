@@ -1,8 +1,8 @@
 {
-  "name": "NPC",
+  "name": "TrapezoidParallax",
   "version": "1.0.0",
-  "description": "NPC Website - http://noplaceclub.com",
-  "license": "Proprietary EULA",
+  "description": "Proof of concept",
+  "license": "MIT",
   "author": {
     "name": "Serhio Magpie",
     "email": "serdidg@gmail.com",
