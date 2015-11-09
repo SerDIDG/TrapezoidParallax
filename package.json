@@ -8,7 +8,7 @@
     "email": "serdidg@gmail.com",
     "url": "https://github.com/SerDIDG"
   },
-  "repository": "SerDIDG/NPC",
+  "repository": "SerDIDG/TrapezoidParallax",
   "dependencies": {
     "bower": "~1.3.0"
   },

@@ -52,7 +52,7 @@ module.exports = function(grunt) {
         less_imports: {
             source: {
                 options: {
-                    banner: '/* ************ SCREENSIDER UI: IMPORT ************ */'
+                    banner: '/* ************ APP UI: IMPORT ************ */'
                 },
                 src: [
                     config['magpieui']['path'] + 'less/' + config['magpieui']['name'] + '.less',

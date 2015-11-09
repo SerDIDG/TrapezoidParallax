@@ -32,13 +32,17 @@ function(params){
     };
 
     var render = function(){
-        cm.addEvent(window, 'resize', resizeAction);
+        cm.addEvent(window, 'resize', resizeEvent);
         resizeAction();
+    };
+
+    var resizeEvent = function(){
+        animFrame(resizeAction);
     };
 
     var resizeAction = function(){
         var pageSize = cm.getPageSize(),
-            size = 'calc(50% + ' + ((pageSize['width'] * Math.tan(radians(7))) / 2) + 'px)',
+            size = 'calc(100% - ' + (pageSize['width'] * Math.tan(radians(7))) + 'px)',
             rule;
         if(rule = cm.getCSSRule('.app__section > .b-top')[0]){
             rule.style.height = size;
