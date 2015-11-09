@@ -13549,7 +13549,7 @@ html.ie9 .com__timeselect > .inner > .sep {
 .app__section > .b-top > .inner,
 .app__section > .b-bottom > .inner {
   position: absolute;
-  background: #ffffff no-repeat fixed center center;
+  background: transparent no-repeat fixed center center;
   background-size: cover;
   top: -50%;
   right: 0;
