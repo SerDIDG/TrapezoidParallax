@@ -13544,6 +13544,7 @@ html.ie9 .com__timeselect > .inner > .sep {
   left: 0;
   -webkit-transform-origin: 50% 50% 0;
   -moz-transform-origin: 50% 50% 0;
+  -ms-transform-origin: 50% 50% 0;
   transform-origin: 50% 50% 0;
 }
 .app__section > .b-top > .inner,
@@ -13557,6 +13558,7 @@ html.ie9 .com__timeselect > .inner > .sep {
   left: 0;
   -webkit-transform-origin: 50% 50% 0;
   -moz-transform-origin: 50% 50% 0;
+  -ms-transform-origin: 50% 50% 0;
   transform-origin: 50% 50% 0;
 }
 .app__section > .b-top {
